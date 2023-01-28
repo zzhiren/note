@@ -1,7 +1,7 @@
 ---
 layout: home
 
-title: Vite
+title: Vite111
 titleTemplate: Zzhiren
 
 hero:
