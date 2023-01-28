@@ -3,12 +3,10 @@ name: Publish Package
 on:
   push:
     branches:
-      - develop
+      - test
       # - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
       # - "plugin-*" # Push events to matching plugin-*, i.e. plugin-(vue|vue-jsx|react|legacy)@1.0.0
       # - "create-vite*" # # Push events to matching create-vite*, i.e. create-vite@1.0.0\
-
-run-name: test to ${{ inputs.deploy_target }} by @${{ github.actor }}
 
 jobs:
   test-publish:
@@ -30,8 +28,6 @@ jobs:
 
       - name: Install deps
         run: pnpm install
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
 
       - name: build
         run: pnpm run docs:build
