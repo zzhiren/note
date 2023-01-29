@@ -1,18 +1,20 @@
-name: Publish Package
-
 on:
   push:
+    branches:
+      - master
     tags:
-      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
-      - "plugin-*" # Push events to matching plugin-*, i.e. plugin-(vue|vue-jsx|react|legacy)@1.0.0
-      - "create-vite*" # # Push events to matching create-vite*, i.e. create-vite@1.0.0
+      - v1.**
+      # - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
+      # - "plugin-*" # Push events to matching plugin-*, i.e. plugin-(vue|vue-jsx|react|legacy)@1.0.0
+      # - "create-vite*" # # Push events to matching create-vite*, i.e. create-vite@1.0.0\
 
 jobs:
   publish:
+    name: Publish
     # prevents this action from running on forks
-    if: github.repository == 'vitejs/vite'
+    if: github.repository == 'Zzhiren/note'
     runs-on: ubuntu-latest
-    environment: Release
+    # environment: Release
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -29,10 +31,12 @@ jobs:
 
       - name: Install deps
         run: pnpm install
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
 
-      - name: Publish package
-        run: pnpm run ci-publish ${{ github.ref_name }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Build
+        run: pnpm run docs:build
+        
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/.vitepress/dist
