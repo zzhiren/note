@@ -1,5 +1,6 @@
 {
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow.json": "file:///f%3A/studio/github/Zzhiren/.github/workflows/deploy.yml"
-  }
+  },
+  "cSpell.words": ["pnpm"]
 }
